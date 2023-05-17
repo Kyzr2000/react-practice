@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react-practice</title>
+    <!-- 引入react的核心库 -->
+    <script src="package/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="package/react-dom.development.js"></script>
+    <!-- 引入label，用于将jsx转为js -->
+    <script src="package/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="package/prop-types.js"></script>
+  </head>
+  <body>
+    <div id="root1"></div>
+    <div id="root2"></div>
+    <!-- 这个地方一定要写类型为text/babel的 -->
+    <script type="text/babel">
+      //1.创建类式组件
+      class Count extends React.Component {
+        constructor(props) {
+          console.log("constructor");
+          super(props);
+          this.state = {
+            count: 0,
+          };
+        }
+        static getDerivedStateFromProps() {
+          console.log("getDerivedStateFromProps");
+          return null;
+        }
+        getSnapshotBeforeUpdate() {
+          console.log("getSnapshotBeforeUpdate");
+          return "kingflyz";
+        }
+        addOne = () => {
+          const { count } = this.state;
+          this.setState({ count: count + 1 });
+        };
+        death = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("root1"));
+        };
+        force = () => {
+          this.forceUpdate();
+        };
+
+        //组件挂载完毕的钩子
+        componentDidMount() {
+          console.log("componentDidMount");
+        }
+        //组件要卸载的钩子
+        componentWillUnmount() {
+          console.log("componentWillUnmount");
+        }
+        //控制组件更新的阀门
+        shouldComponentUpdate() {
+          console.log("shouldComponentUpdate");
+          return true;
+        }
+        //组件更新完毕的钩子
+        componentDidUpdate(preProps, preState, snapShotValue) {
+          console.log("componentDidUpdate", preProps, preState, snapShotValue);
+        }
+        render() {
+          console.log("render");
+          return (
+            <div>
+              <h2>当前数字为：{this.state.count}</h2>
+              <button onClick={this.addOne}>点我数字+1</button>
+              <button onClick={this.death}>点我卸载组件</button>
+              <button onClick={this.force}>点我强制更新一下</button>
+            </div>
+          );
+        }
+      }
+      //2.渲染组件到页面
+      ReactDOM.render(
+        <Count name="kingflyz" />,
+        document.getElementById("root1")
+      );
+    </script>
+  </body>
+</html>

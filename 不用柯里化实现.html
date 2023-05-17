@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react-practice</title>
+    <!-- 引入react的核心库 -->
+    <script src="package/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="package/react-dom.development.js"></script>
+    <!-- 引入label，用于将jsx转为js -->
+    <script src="package/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="package/prop-types.js"></script>
+  </head>
+  <body>
+    <div id="root1"></div>
+    <div id="root2"></div>
+    <!-- 这个地方一定要写类型为text/babel的 -->
+    <script type="text/babel">
+      //1.创建类式组件
+      class Login extends React.Component {
+        //初始化状态
+        state = {
+          username: "",
+          password: "",
+        };
+        saveFormData = (dataType, value) => {
+          this.setState({ [dataType]: value });
+        };
+
+        handleSubmit = (event) => {
+          event.preventDefault(); //阻止表单提交
+          const { username, password } = this.state;
+          alert(`用户名是${username}，密码是${password}`);
+        };
+        render() {
+          return (
+            <form action="http://www.baidu.com" onSubmit={this.handleSubmit}>
+              用户名：
+              <input
+                onChange={(event) => {
+                  this.saveFormData("username", event.target.value);
+                }}
+                type="text"
+                name="username"
+              />
+              密码：
+              <input
+                onChange={(event) => {
+                  this.saveFormData("password", event.target.value);
+                }}
+                type="password"
+                name="password"
+              />
+              <button>登录</button>
+            </form>
+          );
+        }
+      }
+      //2.渲染组件到页面
+      ReactDOM.render(<Login />, document.getElementById("root1"));
+    </script>
+  </body>
+</html>

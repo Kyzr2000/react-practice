@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react-practice</title>
+    <!-- 引入react的核心库 -->
+    <script src="package/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="package/react-dom.development.js"></script>
+    <!-- 引入label，用于将jsx转为js -->
+    <script src="package/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- 这个地方一定要写类型为text/babel的 -->
+    <script type="text/babel">
+      //1.创建类式组件
+      class MyComponent extends React.Component {
+        render() {
+          //render放在类的原型对象上，供实例使用
+          return <h2>我是用函数定义的组件（复杂组件的定义）</h2>;
+        }
+      }
+      //2.渲染组件到页面
+      //react将<MyComponent /> 自动new为一个实例，并调用原型上的render方法
+      ReactDOM.render(<MyComponent />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

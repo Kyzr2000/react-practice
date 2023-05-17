@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react-practice</title>
+    <!-- 引入react的核心库 -->
+    <script src="package/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="package/react-dom.development.js"></script>
+    <!-- 引入label，用于将jsx转为js -->
+    <script src="package/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- 这个地方一定要写类型为text/babel的 -->
+    <script type="text/babel">
+      //模拟数据
+      const dataList = ["Angular", "React", "Vue"];
+      //1.创建虚拟DOM
+      const VDOM = (
+        <div>
+          <h1>前端框架列表</h1>
+          {dataList.map((data, index) => (
+            <li key={index}>{data}</li>
+          ))}
+        </div>
+      );
+      //2.渲染虚拟DOM到页面
+      ReactDOM.render(VDOM, document.getElementById("root"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react-practice</title>
+    <!-- 引入react的核心库 -->
+    <script src="package/react.development.js"></script>
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script src="package/react-dom.development.js"></script>
+    <!-- 引入label，用于将jsx转为js -->
+    <script src="package/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script src="package/prop-types.js"></script>
+  </head>
+  <body>
+    <div id="root1"></div>
+    <div id="root2"></div>
+    <!-- 这个地方一定要写类型为text/babel的 -->
+    <script type="text/babel">
+      //1.创建类式组件
+      class Life extends React.Component {
+        state = {
+          opacity: 1,
+        };
+        death = () => {
+          //卸载组件
+          ReactDOM.unmountComponentAtNode(document.getElementById("root1"));
+        };
+        //页面挂载完成后执行一次
+        componentDidMount() {
+          this.timer = setInterval(() => {
+            //获取原状态
+            let { opacity } = this.state;
+            opacity -= 0.1;
+            if (opacity <= 0) opacity = 1;
+            this.setState({ opacity });
+          }, 200);
+        }
+        //组件将要卸载
+        componentWillUnmount() {
+          clearInterval(this.timer);
+        }
+        render() {
+          console.log("render");
+          return (
+            <div>
+              <h2 style={{ opacity: this.state.opacity }}>
+                React学不会怎么办？
+              </h2>
+              <button onClick={this.death}>不活了</button>
+            </div>
+          );
+        }
+      }
+      //2.渲染组件到页面
+      ReactDOM.render(<Life />, document.getElementById("root1"));
+    </script>
+  </body>
+</html>
